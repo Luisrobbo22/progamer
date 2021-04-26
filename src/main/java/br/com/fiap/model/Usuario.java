@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import jakarta.validation.constraints.Email;
 
 
 @Entity
@@ -26,7 +25,6 @@ public class Usuario {
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 
-	@Email(message = "Necessário o preenchimento do campo com um email válido.")
 	private String email;
 
 	private String senha;
