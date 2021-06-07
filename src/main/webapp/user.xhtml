@@ -28,12 +28,16 @@
 					</p:inputText>
 
 					<p:outputLabel for="dataNascimento" value="Data de Nascimento" />
-					<p:inputText id="dataNascimento" type="date" size="8"
-						value="#{usuarioBean.usuario.dataNascimento}" required="true"
-						validatorMessage="Campo data de nascimento inválido.">
+					<p:calendar id="dataNascimento" type="date" size="8"
+								value="#{usuarioBean.usuario.dataNascimento}"
+								required="true"
+								showOn="button"
+								mask="true"
+								pattern="dd/MM/yyyy"
+								validatorMessage="Campo data de nascimento inválido.">
 						<f:convertDateTime pattern="yyyy-MM-dd" />
 						<f:ajax event="blur" render="messages" />
-					</p:inputText>
+					</p:calendar>
 
 					<p:outputLabel for="email" value="Email" />
 					<p:inputText id="email" type="email"
@@ -46,19 +50,22 @@
 
 
 					<p:outputLabel for="senha" value="Senha" />
-					<p:inputText id="senha" type="password"
-						value="#{usuarioBean.usuario.senha}" required="true"
+					<p:password id="senha"
+								value="#{usuarioBean.usuario.senha}"
+								required="true"
+								toggleMask="true"
+								feedback="true"
 						validatorMessage="A senha deve ser composta pelo menos o mínimo de oito caracteres, pelo menos uma letra maiúscula, uma letra minúscula e um número">
 						<f:validateRegex
 							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" />
 						<f:ajax event="blur" render="messages" />
-					</p:inputText>
+					</p:password>
 
 				</h:panelGrid>
 
 				<f:facet name="footer">
 					<p:commandButton icon="pi pi-check" value="Save"
-						action="#{usuarioBean.save}">
+						action="#{usuarioBean.save}" update="user-table">
 						<p:ajax execute="@form" />
 					</p:commandButton>
 					<p:commandButton icon="pi pi-times" value="Cancel"
@@ -66,17 +73,16 @@
 				</f:facet>
 
 			</p:card>
-		</h:form>
-
-		<h:form id="table-users">
 			<div class="card">
-				<p:dataTable var="usuario" value="#{usuarioBean.usuarios}">
+				<p:dataTable var="usuario" value="#{usuarioBean.usuarios}" id="user-table">
 					<p:column headerText="Nome">
 						<h:outputText value="#{usuario.name}" />
 					</p:column>
 
 					<p:column headerText="Data de Nascimento">
-						<h:outputText value="#{usuario.dataNascimento}" />
+						<h:outputText value="#{usuario.dataNascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" dateStyle="short"/>
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Email">

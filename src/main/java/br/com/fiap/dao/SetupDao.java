@@ -30,4 +30,21 @@ public class SetupDao {
 		
 	}
 
+    public Setup findById(Long id) {
+    	EntityManager manager = JPAUtil.getEntityManager();
+    	Setup setup = manager.find(Setup.class, id);
+
+    	return setup;
+	}
+
+	public void update(Setup setup) {
+		EntityManager manager = JPAUtil.getEntityManager();
+
+		manager.getTransaction().begin();
+		manager.merge(setup);
+		manager.flush();
+		manager.getTransaction().commit();
+
+		manager.close();
+	}
 }
